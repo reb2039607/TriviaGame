@@ -1,12 +1,5 @@
 $("#start").on("click", function(){
-    // $("#subwrapper").remove();
-    for(let i = 0; i<questions.length; i++) {
-        $("#subwrapper").append('<h2>' + questions[i].question + '</h2>');
-
-        for(let j = 0; j<questions[j].answers.length;j++){
-            $("#subwrapper").append("<input type = 'radio' name = 'question- "+i+" ' value=' "+ questions[i].answers[j]+ "'>"+questions[i].answers[j])
-        }
-    }
+    game.start();
 })
 
 var questions = [{
@@ -34,3 +27,29 @@ var questions = [{
     answers: ["Spaghetti", "Salad", "Lasagna", "Pizza"],
     correctAnswer: "Lasagna"
 }];
+
+const game = {
+    correct: 0,
+    incorrect: 0,
+    counter: 120,
+    countdown: function(){
+        game.counter--;
+        $("#counter").html(game.counter);
+        if(game.counter===0){
+            alert("Time is up!");
+            game.done();
+        }
+    },
+    start: function(){
+        timer = setInterval(game.countdown, 1000);
+        $("#subwrapper").prepend("<h2>Time Remaining: <span id='counter'>120</span> Seconds")
+        $("#start").remove();
+    for(let i = 0; i<questions.length; i++) {
+        $("#subwrapper").append('<h2>' + questions[i].question + '</h2>');
+
+        for(let j = 0; j<questions[j].answers.length;j++){
+            $("#subwrapper").append("<input type = 'radio' name = 'question- "+ i +" ' value=' "+ questions[i].answers[j]+ "'>"+questions[i].answers[j])
+        }
+    }
+    }
+}
