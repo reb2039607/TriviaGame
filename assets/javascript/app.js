@@ -6,7 +6,7 @@ $(document).on("click", "#end", function(){
     game.done();
 });
 
-var questions = [{
+let questions = [{
     question: "Which of these is not a PowerPuff Girl?",
     answers: ["Blossom", "Bubbles", "Butterscotch", "Buttercup"],
     correctAnswer: "Butterscotch"
@@ -33,7 +33,7 @@ var questions = [{
 }];
 
 // timer = setInterval(game.countdown, 1000); 
-const game = {
+let game = {
     correct: 0,
     incorrect: 0,
     counter: 10, //change back to 120
@@ -64,6 +64,8 @@ const game = {
     },
 
     done: function () {
+
+        clearInterval(timer);
         
         $.each($("input[name='question-0]':checked"), function() {
             if($(this).val()==questions[0].correctAnswer) {
@@ -113,18 +115,19 @@ const game = {
             }
         });
 
-        this.result();
+        game.result(); //was "this.result();"
         },
 
         result: function(){
 
-            clearInterval(timer);
+            // clearInterval(timer);
+            // $("#timer").remove(); - it's not wanting to remove the time remaining
             $('#subwrapper h2').remove();
 
             $("#subwrapper").html("<h2>Great Job!</h2>");
             $("#subwrapper").append("<h3>Correct Answers: " + this.correct + "</h3>");
             $("#subwrapper").append("<h3>Incorrect Answers: " + this.incorrect + "</h3>");
-            $("#subwrapper").append("<h3>Unanswered: " + (questions.length-(this.incorrect + this.correct)) + "</h3>")
+            $("#subwrapper").append("<h3>Unanswered: " + (questions.length-(this.incorrect + this.correct)) + "</h3>");
 
         }
 }
